@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Our Story — A 3-Year Anniversary Digital Diary
 
-## Getting Started
+A private, cinematic, book-like website celebrating three beautiful years together.
 
-First, run the development server:
+## Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the diary.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How to Add Your Photos
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Drop your photos into `photos-raw/` (create the folder if it doesn't exist)
+2. Run the optimization script:
+   ```bash
+   node scripts/optimize-images.mjs
+   ```
+   This resizes images to max 1600px wide and converts them to WebP in `public/photos/`
+3. If you don't have `sharp-cli` or ImageMagick, manually resize and place WebP files in `public/photos/`
 
-## Learn More
+## How to Edit Content
 
-To learn more about Next.js, take a look at the following resources:
+### Edit your names and dates
+Open `content/config.json` and update:
+```json
+{
+  "partnerName": "Your Partner's Name",
+  "myName": "Your Name",
+  "startDate": "2023-09-18",
+  "anniversaryDate": "2026-09-18",
+  "passcode": "",
+  "finalLetter": "Your love letter here..."
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Edit diary entries
+Open `content/entries.json` and add/modify entries. Each entry needs:
+```json
+{
+  "id": "unique-id",
+  "date": "2024-01-15",
+  "title": "Entry Title",
+  "body": "Paragraph one.\n\nParagraph two.",
+  "images": ["/photos/your-photo.webp"],
+  "layout": "left",
+  "mood": "✨",
+  "caption": "Optional caption"
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Layouts available:**
+- `"left"` — Photo on the left, text on the right
+- `"right"` — Photo on the right, text on the left
+- `"full"` — Full-bleed image with text overlay
+- `"collage"` — Multiple images in overlapping arrangement
 
-## Deploy on Vercel
+## Adding Music
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Place an MP3 file at `public/audio/song.mp3`. The music toggle will automatically appear (off by default, user must click to play).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy to Vercel
+
+This project is configured for static export. Simply connect your repo to Vercel and deploy:
+
+```bash
+npm run build
+```
+
+The `out/` directory contains the static site.
+
+## Tech Stack
+
+- Next.js 14+ (App Router)
+- TypeScript (strict)
+- Tailwind CSS v4
+- Framer Motion (animations)
+- Lenis (smooth scrolling)
+- Canvas Confetti (final page celebration)
+- Howler.js (optional music)

@@ -1,0 +1,107 @@
+[
+  {
+    "id": "how-we-met",
+    "date": "2023-09-18",
+    "title": "How We Met",
+    "body": "It was one of those days that started out ordinary. I was just going about my usual routine, not expecting anything different. But then you walked in, and the world seemed to pause for a moment.\n\nWe talked like we had known each other forever. There was no awkwardness, no hesitation — just an immediate connection that I still can't explain.\n\nThat day changed everything. I just didn't know it yet.",
+    "images": ["/photos/placeholder-01.webp"],
+    "layout": "right",
+    "mood": "✨",
+    "caption": "The day everything started"
+  },
+  {
+    "id": "first-laugh",
+    "date": "2023-10-05",
+    "title": "Our First Real Laugh",
+    "body": "Do you remember that ridiculous thing that happened? We couldn't stop laughing — the kind where your stomach hurts and you can barely breathe.\n\nI knew right then that I wanted to laugh with you every single day.\n\nYou have the most beautiful laugh I've ever heard.",
+    "images": ["/photos/placeholder-02.webp"],
+    "layout": "left",
+    "mood": "😂"
+  },
+  {
+    "id": "first-date",
+    "date": "2023-10-20",
+    "title": "Our First Official Date",
+    "body": "I was so nervous. I changed my outfit three times before you picked me up. But the moment I saw your smile, all the nerves melted away.\n\nDinner was wonderful, but the walk afterwards was even better. We talked for hours and I didn't want the night to end.\n\nThat night, walking you to my door, I knew this was something special.",
+    "images": ["/photos/placeholder-03.webp"],
+    "layout": "right",
+    "mood": "💕",
+    "caption": "That restaurant, that night"
+  },
+  {
+    "id": "first-fight",
+    "date": "2023-12-10",
+    "title": "Our First Fight, Our First Make-Up",
+    "body": "We fought. It was messy and hurtful and I hated every second of it. But you know what? We came back stronger.\n\nYou knocked on my door with that look in your eyes — the one that said 'I'm sorry' without any words. And I realized that love isn't about never fighting. It's about always coming back to each other.\n\nThat fight taught me that we could weather anything together.",
+    "images": ["/photos/placeholder-04.webp"],
+    "layout": "full",
+    "mood": "🌧️"
+  },
+  {
+    "id": "first-trip",
+    "date": "2024-01-15",
+    "title": "Our First Trip Together",
+    "body": "Packing together, getting lost on the way, finding that tiny café that served the best coffee we've ever had.\n\nEvery moment of that trip was an adventure. Even the rainy day we spent curled up in the hotel room, just talking and being together.\n\nI learned more about you in those five days than I had in months. And I fell even deeper.",
+    "images": ["/photos/placeholder-05.webp", "/photos/placeholder-06.webp"],
+    "layout": "collage",
+    "mood": "✈️",
+    "caption": "Five days, one million memories"
+  },
+  {
+    "id": "valentines-2024",
+    "date": "2024-02-14",
+    "title": "First Valentine's Day",
+    "body": "You surprised me. You always know how to surprise me.\n\nThe flowers, the dinner, that little note you tucked into my pocket that I didn't find until later. You put so much thought into every detail.\n\nBut the best gift was just being with you. Everything else was just decoration.",
+    "images": ["/photos/placeholder-07.webp"],
+    "layout": "right",
+    "mood": "🌹"
+  },
+  {
+    "id": "moving-in",
+    "date": "2024-06-01",
+    "title": "The Day We Moved In Together",
+    "body": "Cardboard boxes everywhere, arguing about where the couch should go, eating pizza on the floor because we couldn't find the plates.\n\nIt was chaos. Beautiful, wonderful chaos.\n\nWaking up the next morning with you in our home — that was the moment it all felt real. This was us now. Our little corner of the world.",
+    "images": ["/photos/placeholder-08.webp"],
+    "layout": "left",
+    "mood": "🏠",
+    "caption": "Home is wherever you are"
+  },
+  {
+    "id": "sick-day",
+    "date": "2024-09-10",
+    "title": "The Day You Took Care of Me",
+    "body": "I was sick and miserable and probably not the most pleasant person to be around. But you were there. Every single moment.\n\nYou made soup from scratch because 'canned soup isn't going to cut it.' You sat with me through the worst of it and never once complained.\n\nThat's when I knew. This isn't just love. This is partnership. This is home.",
+    "images": ["/photos/placeholder-09.webp"],
+    "layout": "right",
+    "mood": "🤒"
+  },
+  {
+    "id": "random-tuesday",
+    "date": "2025-03-18",
+    "title": "A Random Tuesday I Loved",
+    "body": "Nothing special happened. That's what made it perfect.\n\nWe grocery shopped together, made dinner, watched that show we're obsessed with, and fell asleep on the couch.\n\nSometimes the most beautiful moments are the ones where nothing extraordinary happens — because being with you makes everything extraordinary.",
+    "images": ["/photos/placeholder-10.webp"],
+    "layout": "full",
+    "mood": "☀️"
+  },
+  {
+    "id": "anniversary-trip",
+    "date": "2025-09-18",
+    "title": "Two Years and Still Falling",
+    "body": "Two years. We celebrated with a trip — our favorite thing to do together.\n\nStanding on that overlook, watching the sunset with you in my arms, I made a silent promise. I promised to keep choosing you, every single day, for the rest of my life.\n\nHere's to year three.",
+    "images": ["/photos/placeholder-11.webp"],
+    "layout": "collage",
+    "mood": "🌅",
+    "caption": "Two years down, forever to go"
+  },
+  {
+    "id": "today",
+    "date": "2026-09-18",
+    "title": "Today",
+    "body": "Three years. One thousand and ninety-six days of loving you.\n\nEvery day with you is a gift. Every morning I wake up next to you, every night I fall asleep in your arms, every laugh we share, every tear we wipe — it all adds up to the most beautiful story I could ever imagine.\n\nI love you more today than yesterday, and I'll love you more tomorrow than today.\n\nHappy anniversary, my love.",
+    "images": ["/photos/placeholder-12.webp"],
+    "layout": "right",
+    "mood": "❤️",
+    "caption": "Three beautiful years"
+  }
+]
