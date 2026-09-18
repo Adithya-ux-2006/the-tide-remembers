@@ -1,8 +1,16 @@
 {
-  "partnerName": "{{PARTNER_NAME}}",
+  "appName": "US+",
   "myName": "{{MY_NAME}}",
+  "partnerName": "{{PARTNER_NAME}}",
   "startDate": "2023-09-18",
   "anniversaryDate": "2026-09-18",
   "passcode": "",
-  "finalLetter": "Three years ago, I found you.\n\nAnd since that day, every ordinary moment has become extraordinary. The quiet mornings, the late-night talks, the silly jokes, the way you look at me when you think I'm not watching — they all mean the world to me.\n\nYou are my favorite adventure, my safest place, and the most beautiful story I've ever been part of.\n\nHere's to forever and always.\n\nAll my love,\n{{MY_NAME}}"
+  "finalLetter": [
+    "Three years ago, our story began.",
+    "From that first moment, every ordinary day became an adventure worth remembering.",
+    "We laughed until it hurt, held each other through storms, and danced in the kitchen at midnight.",
+    "This is our story — unscripted, unfiltered, and absolutely ours.",
+    "Thank you for being the best part of every scene.",
+    "Here's to Season 4 and every season after."
+  ]
 }

@@ -1,29 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #fbf6ee;
-  --paper-dark: #f1e7d6;
-  --ink: #2b2320;
-  --muted: #7a6a5e;
-  --accent: #c96f6f;
-  --accent-2: #e8b4a0;
-  --gold: #c9a46a;
-  --background: var(--paper);
-  --foreground: var(--ink);
+  --bg: #141414;
+  --bg-elev: #181818;
+  --card: #1F1F1F;
+  --text: #FFFFFF;
+  --text-dim: #B3B3B3;
+  --accent: #E5384A;
+  --gold: #F5C16C;
+  --overlay: linear-gradient(to top, #141414 8%, transparent 60%);
+  --background: var(--bg);
+  --foreground: var(--text);
 }
 
 @theme inline {
-  --color-paper: var(--paper);
-  --color-paper-dark: var(--paper-dark);
-  --color-ink: var(--ink);
-  --color-muted: var(--muted);
+  --color-bg: var(--bg);
+  --color-bg-elev: var(--bg-elev);
+  --color-card: var(--card);
+  --color-text: var(--text);
+  --color-text-dim: var(--text-dim);
   --color-accent: var(--accent);
-  --color-accent-2: var(--accent-2);
   --color-gold: var(--gold);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-caveat: var(--font-caveat);
-  --font-cormorant: var(--font-cormorant);
+  --font-bebas: var(--font-bebas);
   --font-inter: var(--font-inter);
 }
 
@@ -32,39 +32,17 @@ html {
 }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-cormorant), Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter), system-ui, sans-serif;
 }
 
-/* Paper grain texture overlay */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px 256px;
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--paper-dark);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--muted);
-  border-radius: 3px;
-}
-
-/* Focus ring */
+/* Focus */
 *:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -73,6 +51,18 @@ body::before {
 
 /* Selection */
 ::selection {
-  background: var(--accent-2);
-  color: var(--ink);
+  background: var(--accent);
+  color: var(--text);
+}
+
+/* Embla overrides */
+.embla { overflow: hidden; }
+.embla__container { display: flex; gap: 6px; }
+.embla__slide { flex: 0 0 auto; min-width: 0; }
+
+/* Ken Burns */
+@keyframes kenBurns {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.08) translate(-1%, -1%); }
+  100% { transform: scale(1) translate(0, 0); }
 }

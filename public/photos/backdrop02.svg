@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" style="stop-color:#F5C16C;stop-opacity:1"/>
+    <stop offset="100%" style="stop-color:#2d1f3d;stop-opacity:1"/>
+  </linearGradient></defs>
+  <rect width="1280" height="720" fill="url(#g)"/>
+  <text x="640" y="360" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-size="48" fill="rgba(255,255,255,0.1)">BACKDROP 02</text>
+</svg>
