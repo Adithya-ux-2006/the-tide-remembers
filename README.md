@@ -1,6 +1,6 @@
-# Our Story — A 3-Year Anniversary Digital Diary
+# US+ — Our 3-Year Anniversary Streaming Diary
 
-A private, cinematic, book-like website celebrating three beautiful years together.
+A dark, cinematic streaming-app-style website that presents our 3 years together as a show catalog.
 
 ## Quick Start
 
@@ -9,74 +9,81 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the diary.
+Visit **http://localhost:3000** to see the app flow:
+1. **Intro** — Animated US+ wordmark with glow effect (2.5s, skippable, plays once per session)
+2. **Profile Select** — "Who's watching?" screen with emoji profile tiles
+3. **Browse** — Hero billboard, horizontal carousels, cards with hover preview
+4. **Watch** — Full-screen story mode with crossfading images and cinematic subtitles
+5. **Credits** — Rolling credits with the final letter and "Renewed for Season 4"
 
-## How to Add Your Photos
+## How to Add Episodes
 
-1. Drop your photos into `photos-raw/` (create the folder if it doesn't exist)
-2. Run the optimization script:
-   ```bash
-   node scripts/optimize-images.mjs
+1. Add your photos to `photos-raw/` (create if needed)
+2. Run `node scripts/optimize-images.mjs` to generate WebP thumbnails and full-size images
+3. Edit `content/entries.json` — each entry needs:
+   ```json
+   {
+     "id": "s1e01-how-we-met",
+     "season": 1,
+     "episode": 1,
+     "date": "2023-09-18",
+     "title": "How We Met",
+     "synopsis": "1-2 line card description",
+     "story": "Paragraph one.\n\nParagraph two.\n\nParagraph three.",
+     "thumb": "/photos/your-thumb.webp",
+     "images": ["/photos/img1.webp", "/photos/img2.webp"],
+     "backdrop": "/photos/backdrop.webp",
+     "tags": ["Firsts", "Favorites"],
+     "runtime": "1 evening that lasted forever",
+     "featured": true,
+     "top10": false
+   }
    ```
-   This resizes images to max 1600px wide and converts them to WebP in `public/photos/`
-3. If you don't have `sharp-cli` or ImageMagick, manually resize and place WebP files in `public/photos/`
 
-## How to Edit Content
+## How to Add Rows
 
-### Edit your names and dates
-Open `content/config.json` and update:
+Edit `content/rows.json`:
+```json
+{ "id": "my-row", "title": "My Custom Row", "type": "custom", "entryIds": ["s1e01-how-we-met"] }
+```
+
+Row types: `season`, `tag`, `top10`, `continue`, `custom`
+
+## Configuration
+
+Edit `content/config.json`:
 ```json
 {
-  "partnerName": "Your Partner's Name",
+  "appName": "US+",
   "myName": "Your Name",
+  "partnerName": "Partner's Name",
   "startDate": "2023-09-18",
   "anniversaryDate": "2026-09-18",
   "passcode": "",
-  "finalLetter": "Your love letter here..."
+  "finalLetter": ["Paragraph 1", "Paragraph 2"]
 }
 ```
 
-### Edit diary entries
-Open `content/entries.json` and add/modify entries. Each entry needs:
-```json
-{
-  "id": "unique-id",
-  "date": "2024-01-15",
-  "title": "Entry Title",
-  "body": "Paragraph one.\n\nParagraph two.",
-  "images": ["/photos/your-photo.webp"],
-  "layout": "left",
-  "mood": "✨",
-  "caption": "Optional caption"
-}
-```
-
-**Layouts available:**
-- `"left"` — Photo on the left, text on the right
-- `"right"` — Photo on the right, text on the left
-- `"full"` — Full-bleed image with text overlay
-- `"collage"` — Multiple images in overlapping arrangement
+Set `passcode` to a non-empty string to enable the gate screen.
 
 ## Adding Music
 
-Place an MP3 file at `public/audio/song.mp3`. The music toggle will automatically appear (off by default, user must click to play).
+Place an MP3 at `public/audio/song.mp3`. The music toggle appears automatically.
 
 ## Deploy to Vercel
-
-This project is configured for static export. Simply connect your repo to Vercel and deploy:
 
 ```bash
 npm run build
 ```
 
-The `out/` directory contains the static site.
+Push to Vercel — the project uses static export (`output: "export"`).
 
 ## Tech Stack
 
-- Next.js 14+ (App Router)
-- TypeScript (strict)
-- Tailwind CSS v4
-- Framer Motion (animations)
-- Lenis (smooth scrolling)
-- Canvas Confetti (final page celebration)
+- Next.js 16+ (App Router) with static export
+- TypeScript (strict), Tailwind CSS v4
+- Framer Motion (all animation, layoutId transitions)
+- Embla Carousel (horizontal rows with drag/swipe)
+- Lenis (smooth page scrolling)
 - Howler.js (optional music)
+- Canvas Confetti (credits celebration)
