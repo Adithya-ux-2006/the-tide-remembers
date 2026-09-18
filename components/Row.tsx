@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import useEmblaCarousel from "embla-carousel-react";
 import { motion } from "framer-motion";
 import Card from "./Card";
@@ -45,7 +46,6 @@ export default function Row({ title, entries, isTop10 = false, isContinue = fals
     };
   }, [emblaApi, onSelect]);
 
-  // Filter out empty continue watching
   if (isContinue && entries.length === 0) return null;
 
   return (
@@ -67,7 +67,6 @@ export default function Row({ title, entries, isTop10 = false, isContinue = fals
       </h2>
 
       <div className="relative group">
-        {/* Prev arrow */}
         {canScrollPrev && (
           <motion.button
             className={`absolute left-0 top-0 bottom-0 w-12 z-10 bg-black/60 hover:bg-black/80 flex items-center justify-center cursor-pointer transition-opacity ${
@@ -102,7 +101,6 @@ export default function Row({ title, entries, isTop10 = false, isContinue = fals
           </div>
         </div>
 
-        {/* Next arrow */}
         {canScrollNext && (
           <motion.button
             className={`absolute right-0 top-0 bottom-0 w-12 z-10 bg-black/60 hover:bg-black/80 flex items-center justify-center cursor-pointer transition-opacity ${
@@ -122,7 +120,7 @@ export default function Row({ title, entries, isTop10 = false, isContinue = fals
 }
 
 function Top10Card({ entry, rank }: { entry: Entry; rank: number }) {
-  const router = require("next/navigation").useRouter();
+  const router = useRouter();
 
   return (
     <motion.button
@@ -153,9 +151,9 @@ function Top10Card({ entry, rank }: { entry: Entry; rank: number }) {
 }
 
 function ContinueCard({ entry }: { entry: Entry }) {
+  const router = useRouter();
   const progress = getEntryProgress(entry.id);
-  const pct = progress ? Math.min(((progress.beatIndex + 1) / 5) * 100, 95) : 0;
-  const router = require("next/navigation").useRouter();
+  const pct = progress ? Math.min(((progress.beatIndex + 1) / 3) * 100, 95) : 0;
 
   return (
     <motion.button
@@ -173,7 +171,6 @@ function ContinueCard({ entry }: { entry: Entry }) {
           className="w-full h-full object-cover"
           loading="lazy"
         />
-        {/* Progress bar */}
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
           <div className="h-full bg-accent" style={{ width: `${pct}%` }} />
         </div>
