@@ -1,9 +1,10 @@
 [
-  { "id": "trending", "title": "Most Rewatched Memories", "type": "custom", "entryIds": ["s1e01-how-we-met", "s3e02-three-years", "s1e02-first-date", "s2e02-growing-together"] },
+  { "id": "trending", "title": "Most Rewatched Memories", "type": "custom", "entryIds": ["s3e02-three-years", "s1e01-first-laugh", "s2e01-how-we-met", "s2e02-growing-together"] },
   { "id": "top10", "title": "Top Moments", "type": "top10" },
   { "id": "s1", "title": "Season 1: The Beginning", "type": "season", "ref": "1" },
   { "id": "s2", "title": "Season 2: Growing Together", "type": "season", "ref": "2" },
   { "id": "s3", "title": "Season 3: Us Against the World", "type": "season", "ref": "3" },
   { "id": "firsts", "title": "Firsts", "type": "tag", "ref": "Firsts" },
-  { "id": "picks", "title": "Because You Love Us", "type": "custom", "entryIds": ["s2e01-first-laugh", "s3e01-adventure"] }
+  { "id": "funny", "title": "Funny Moments", "type": "tag", "ref": "Funny" },
+  { "id": "picks", "title": "Because You Love Us", "type": "custom", "entryIds": ["s1e02-first-date", "s3e01-adventure"] }
 ]
