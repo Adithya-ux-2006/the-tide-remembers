@@ -14,7 +14,11 @@ export default function DiaryPage() {
     <SmoothScroll>
       <main className="min-h-screen bg-paper">
         <DiaryScroller entries={entries} />
-        <FinalPage finalLetter={config.finalLetter} />
+        <FinalPage
+          finalLetter={config.finalLetter}
+          partnerName={config.partnerName}
+          myName={config.myName}
+        />
         <MusicToggle />
       </main>
     </SmoothScroll>

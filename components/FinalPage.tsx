@@ -6,11 +6,16 @@ import confetti from "canvas-confetti";
 
 interface FinalPageProps {
   finalLetter: string;
+  partnerName: string;
+  myName: string;
 }
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-export default function FinalPage({ finalLetter }: FinalPageProps) {
+export default function FinalPage({ finalLetter, partnerName, myName }: FinalPageProps) {
+  const processedLetter = finalLetter
+    .replace(/\{\{PARTNER_NAME\}\}/g, partnerName)
+    .replace(/\{\{MY_NAME\}\}/g, myName);
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { amount: 0.6 });
   const [confettiFired, setConfettiFired] = useState(false);
@@ -49,7 +54,7 @@ export default function FinalPage({ finalLetter }: FinalPageProps) {
     }
   }, [isInView, confettiFired, prefersReducedMotion]);
 
-  const paragraphs = finalLetter.split("\n\n");
+  const paragraphs = processedLetter.split("\n\n");
 
   return (
     <motion.section
