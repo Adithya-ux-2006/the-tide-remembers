@@ -7,11 +7,17 @@ import { tryGet } from "@/lib/utils";
 import { getConfig, getEntries } from "@/lib/content";
 import type { Entry } from "@/lib/types";
 
+function scrollToId(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Entry[]>([]);
+  const [activeSection, setActiveSection] = useState("");
   const router = useRouter();
   const pathname = usePathname();
   const config = getConfig();
@@ -37,11 +43,27 @@ export default function Navbar() {
     );
   }, []);
 
+  const navigate = useCallback((href: string) => {
+    if (href.startsWith("/browse#")) {
+      const sectionId = href.replace("/browse#", "");
+      if (pathname === "/browse") {
+        scrollToId(sectionId);
+      } else {
+        router.push("/browse");
+        setTimeout(() => scrollToId(sectionId), 400);
+      }
+      setActiveSection(sectionId);
+    } else {
+      router.push(href);
+      setActiveSection("");
+    }
+  }, [pathname, router]);
+
   const links = [
-    { label: "Home", href: "/browse" },
-    { label: "Seasons", href: "/browse#seasons" },
-    { label: "Top 10", href: "/browse#top10" },
-    { label: "Trips", href: "/browse#trips" },
+    { label: "Home", href: "/browse", section: "" },
+    { label: "Seasons", href: "/browse#s1", section: "s1" },
+    { label: "Top 10", href: "/browse#top10", section: "top10" },
+    { label: "Trips", href: "/browse#firsts", section: "firsts" },
   ];
 
   return (
@@ -52,29 +74,33 @@ export default function Navbar() {
       >
         <div className="flex items-center gap-6">
           <button
-            onClick={() => router.push("/browse")}
+            onClick={() => navigate("/browse")}
             className="text-3xl tracking-tight cursor-pointer"
             style={{ fontFamily: "var(--font-bebas)", color: "var(--accent)" }}
           >
             {config.appName}
           </button>
           <div className="hidden md:flex items-center gap-4">
-            {links.map((link) => (
-              <button
-                key={link.label}
-                onClick={() => router.push(link.href)}
-                className={`text-sm cursor-pointer transition-colors ${
-                  pathname === link.href ? "text-text font-semibold" : "text-text-dim hover:text-text"
-                }`}
-              >
-                {link.label}
-              </button>
-            ))}
+            {links.map((link) => {
+              const isActive = link.section
+                ? activeSection === link.section
+                : pathname === "/browse" && !activeSection;
+              return (
+                <button
+                  key={link.label}
+                  onClick={() => navigate(link.href)}
+                  className={`text-sm cursor-pointer transition-colors ${
+                    isActive ? "text-text font-semibold" : "text-text-dim hover:text-text"
+                  }`}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         <div className="flex items-center gap-4">
-          {/* Search */}
           <div className="relative">
             <button
               onClick={() => { setSearchOpen(!searchOpen); setSearchQuery(""); setSearchResults([]); }}
@@ -110,7 +136,9 @@ export default function Navbar() {
                         onClick={() => { router.push(`/watch/${entry.id}`); setSearchOpen(false); }}
                         className="w-full flex items-center gap-3 p-2 rounded hover:bg-card transition-colors text-left cursor-pointer"
                       >
-                        <div className="w-16 h-9 bg-card rounded overflow-hidden flex-shrink-0" />
+                        <div className="w-16 h-9 bg-card rounded overflow-hidden flex-shrink-0">
+                          <img src={entry.thumb} alt="" className="w-full h-full object-cover" />
+                        </div>
                         <div>
                           <p className="text-sm text-text">{entry.title}</p>
                           <p className="text-xs text-text-dim">S{entry.season} E{entry.episode}</p>
@@ -123,7 +151,6 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Profile */}
           <div className="w-8 h-8 rounded bg-accent flex items-center justify-center text-white text-xs font-bold">
             {profileName.charAt(0)}
           </div>
@@ -132,23 +159,28 @@ export default function Navbar() {
 
       {/* Mobile bottom bar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-bg-elev border-t border-white/10 h-14 flex items-center justify-around px-4">
-        {links.map((link) => (
-          <button
-            key={link.label}
-            onClick={() => router.push(link.href)}
-            className={`flex flex-col items-center gap-0.5 text-[10px] cursor-pointer transition-colors ${
-              pathname === link.href ? "text-accent" : "text-text-dim"
-            }`}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <rect x="3" y="3" width="7" height="7" rx="1" />
-              <rect x="14" y="3" width="7" height="7" rx="1" />
-              <rect x="3" y="14" width="7" height="7" rx="1" />
-              <rect x="14" y="14" width="7" height="7" rx="1" />
-            </svg>
-            {link.label}
-          </button>
-        ))}
+        {links.map((link) => {
+          const isActive = link.section
+            ? activeSection === link.section
+            : pathname === "/browse" && !activeSection;
+          return (
+            <button
+              key={link.label}
+              onClick={() => navigate(link.href)}
+              className={`flex flex-col items-center gap-0.5 text-[10px] cursor-pointer transition-colors ${
+                isActive ? "text-accent" : "text-text-dim"
+              }`}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <rect x="3" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="3" width="7" height="7" rx="1" />
+                <rect x="3" y="14" width="7" height="7" rx="1" />
+                <rect x="14" y="14" width="7" height="7" rx="1" />
+              </svg>
+              {link.label}
+            </button>
+          );
+        })}
       </div>
     </>
   );
