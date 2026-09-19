@@ -139,15 +139,17 @@ export default function WatchPlayer({ entry }: WatchPlayerProps) {
       <AnimatePresence mode="wait">
         <motion.div
           key={`text-${currentBeat}`}
-          className="absolute bottom-24 sm:bottom-32 left-0 right-0 px-6 sm:px-16 text-center"
+          className="absolute bottom-28 sm:bottom-36 left-0 right-0 px-6 sm:px-12 text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-lg sm:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto drop-shadow-lg" style={{ fontFamily: "var(--font-inter)" }}>
-            {beat?.text}
-          </p>
+          <div className="inline-block max-w-2xl mx-auto px-6 py-4 rounded-lg bg-black/40 backdrop-blur-sm">
+            <p className="text-base sm:text-xl text-white/95 leading-relaxed" style={{ fontFamily: "var(--font-inter)" }}>
+              {beat?.text}
+            </p>
+          </div>
         </motion.div>
       </AnimatePresence>
 

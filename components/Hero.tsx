@@ -3,9 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { getFeaturedEntries } from "@/lib/content";
-import { useReducedMotion } from "framer-motion";
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -61,9 +60,9 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" />
 
           {/* Content */}
-          <div className="absolute bottom-16 sm:bottom-24 left-4 sm:left-8 lg:left-12 max-w-xl">
+          <div className="absolute bottom-20 sm:bottom-28 left-4 sm:left-8 lg:left-12 max-w-lg">
             <motion.h1
-              className="text-5xl sm:text-7xl lg:text-8xl mb-3 leading-none"
+              className="text-5xl sm:text-7xl lg:text-8xl mb-2 leading-[0.9]"
               style={{ fontFamily: "var(--font-bebas)" }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -73,7 +72,7 @@ export default function Hero() {
             </motion.h1>
 
             <motion.div
-              className="flex items-center gap-3 mb-3 text-sm"
+              className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3 text-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
@@ -82,11 +81,10 @@ export default function Hero() {
               <span className="text-text-dim">S{entry.season} E{entry.episode}</span>
               {entry.runtime && <span className="text-text-dim">{entry.runtime}</span>}
               <span className="px-1.5 py-0.5 border border-text-dim/50 text-text-dim text-xs rounded">Rated: Forever</span>
-              <span className="text-text-dim">HD</span>
             </motion.div>
 
             <motion.p
-              className="text-text-dim text-sm sm:text-base mb-5 line-clamp-3"
+              className="text-text-dim text-sm sm:text-base mb-5 line-clamp-2 max-w-md"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -130,7 +128,7 @@ export default function Hero() {
 
       {/* Nav dots */}
       {featured.length > 1 && (
-        <div className="absolute bottom-6 right-4 sm:right-8 lg:right-12 flex gap-1.5">
+        <div className="absolute bottom-8 right-4 sm:right-8 lg:right-12 flex gap-1.5">
           {featured.map((_, i) => (
             <button
               key={i}

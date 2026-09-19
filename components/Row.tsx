@@ -60,7 +60,7 @@ export default function Row({ title, entries, isTop10 = false, isContinue = fals
       onMouseLeave={() => setShowArrows(false)}
     >
       <h2
-        className="text-xl sm:text-2xl px-4 sm:px-8 lg:px-12 mb-3 text-text"
+        className="text-xl sm:text-2xl px-4 sm:px-8 lg:px-12 mb-3 text-text tracking-wide"
         style={{ fontFamily: "var(--font-bebas)" }}
       >
         {title}
@@ -125,7 +125,7 @@ function Top10Card({ entry, rank }: { entry: Entry; rank: number }) {
   return (
     <motion.button
       onClick={() => router.push(`/watch/${entry.id}`)}
-      className="relative flex-shrink-0 cursor-pointer group"
+      className="flex-shrink-0 cursor-pointer group text-left"
       style={{ width: 140 }}
       whileHover={{ scale: 1.35, zIndex: 20, y: -20 }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -145,7 +145,9 @@ function Top10Card({ entry, rank }: { entry: Entry; rank: number }) {
           loading="lazy"
         />
       </div>
-      <p className="text-xs text-text mt-2 truncate">{entry.title}</p>
+      <div className="mt-2 h-8 overflow-hidden">
+        <p className="text-xs text-text truncate leading-tight">{entry.title}</p>
+      </div>
     </motion.button>
   );
 }
@@ -158,7 +160,7 @@ function ContinueCard({ entry }: { entry: Entry }) {
   return (
     <motion.button
       onClick={() => router.push(`/watch/${entry.id}`)}
-      className="relative flex-shrink-0 cursor-pointer group"
+      className="flex-shrink-0 cursor-pointer group text-left"
       style={{ width: 200 }}
       whileHover={{ scale: 1.35, zIndex: 20, y: -20 }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -175,9 +177,9 @@ function ContinueCard({ entry }: { entry: Entry }) {
           <div className="h-full bg-accent" style={{ width: `${pct}%` }} />
         </div>
       </div>
-      <div className="bg-card rounded-b p-2">
-        <p className="text-sm text-text truncate">{entry.title}</p>
-        <p className="text-xs text-text-dim">Resume S{entry.season} E{entry.episode}</p>
+      <div className="bg-card rounded-b p-2 h-14 overflow-hidden">
+        <p className="text-sm text-text truncate leading-tight">{entry.title}</p>
+        <p className="text-xs text-text-dim mt-0.5 truncate leading-tight">Resume S{entry.season} E{entry.episode}</p>
       </div>
     </motion.button>
   );
