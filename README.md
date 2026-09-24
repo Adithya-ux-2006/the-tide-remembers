@@ -1,89 +1,163 @@
-# US+ — Our 3-Year Anniversary Streaming Diary
+# THE TIDE REMEMBERS
 
-A dark, cinematic streaming-app-style website that presents our 3 years together as a show catalog.
+**A little story about the sea, the shore, and the ones we found along the way.**
 
-## Quick Start
+A premium, Netflix-inspired *cinematic digital diary* built with Streamlit. Six personal
+photographs are presented as six chapters of one continuous shoreline story — full-screen
+hero, chapter navigation, scroll choreography, and a full-screen “Play Story” documentary
+mode.
+
+> **A CINEMATIC DIGITAL DIARY**
+> 2026 · 6 MOMENTS · BEACH · SEA · WILDLIFE
+
+---
+
+## Run Locally
 
 ```bash
-npm install
-npm run dev
+pip install -r requirements.txt
+streamlit run app.py
 ```
 
-Visit **http://localhost:3000** to see the app flow:
-1. **Intro** — Animated US+ wordmark with glow effect (2.5s, skippable, plays once per session)
-2. **Profile Select** — "Who's watching?" screen with emoji profile tiles
-3. **Browse** — Hero billboard, horizontal carousels, cards with hover preview
-4. **Watch** — Full-screen story mode with crossfading images and cinematic subtitles
-5. **Credits** — Rolling credits with the final letter and "Renewed for Season 4"
+Then open **http://localhost:8501**.
 
-## How to Add Episodes
+---
 
-1. Add your photos to `photos-raw/` (create if needed)
-2. Run `node scripts/optimize-images.mjs` to generate WebP thumbnails and full-size images
-3. Edit `content/entries.json` — each entry needs:
-   ```json
-   {
-     "id": "s1e01-how-we-met",
-     "season": 1,
-     "episode": 1,
-     "date": "2023-09-18",
-     "title": "How We Met",
-     "synopsis": "1-2 line card description",
-     "story": "Paragraph one.\n\nParagraph two.\n\nParagraph three.",
-     "thumb": "/photos/your-thumb.webp",
-     "images": ["/photos/img1.webp", "/photos/img2.webp"],
-     "backdrop": "/photos/backdrop.webp",
-     "tags": ["Firsts", "Favorites"],
-     "runtime": "1 evening that lasted forever",
-     "featured": true,
-     "top10": false
-   }
-   ```
+## Deploy on Streamlit Community Cloud
 
-## How to Add Rows
+1. Push this repository to GitHub
+2. Open [Streamlit Community Cloud](https://share.streamlit.io)
+3. Select the repository
+4. Select `app.py` as the main file path
+5. Deploy
 
-Edit `content/rows.json`:
-```json
-{ "id": "my-row", "title": "My Custom Row", "type": "custom", "entryIds": ["s1e01-how-we-met"] }
+No environment variables or secrets are required — the six photos are embedded from
+`assets/` using relative paths resolved at runtime.
+
+---
+
+## Project Structure
+
+```text
+the-tide-remembers/
+│
+├── app.py                  # entry point — assembles the page, hides Streamlit chrome
+├── requirements.txt
+├── README.md
+├── .gitignore
+│
+├── assets/
+│   ├── photo1.jpg          # chapter 01 (also the hero still)
+│   ├── photo2.jpg
+│   ├── photo3.jpg
+│   ├── photo4.jpg          # the little traveller — tortoise chapter
+│   ├── photo5.jpg
+│   └── photo6.jpg
+│
+├── components/
+│   ├── hero.py             # full-screen landing hero
+│   ├── chapters.py         # nav, timeline, six chapter layouts, footer
+│   ├── story.py            # full-screen “Play Story” player markup
+│   ├── scripts.py          # scroll choreography + story player (vanilla JS)
+│   ├── styles.py           # all CSS + Streamlit chrome-hiding styles
+│   └── svg.py              # tortoise motif + player icons
+│
+├── data/
+│   └── diary.py            # ← ALL content lives here
+│
+└── .streamlit/
+    └── config.toml         # dark theme defaults
 ```
 
-Row types: `season`, `tag`, `top10`, `continue`, `custom`
+---
 
-## Configuration
+## Editing Content (photos, titles, captions)
 
-Edit `content/config.json`:
-```json
+Everything editable lives in **`data/diary.py`** — the frontend never needs to change.
+
+### Replace a photo
+
+1. Drop the new file into `assets/` (e.g. `assets/photo1.jpg`)
+2. Keep the same filename, **or** update the `image` key of that chapter:
+
+```python
 {
-  "appName": "US+",
-  "myName": "Your Name",
-  "partnerName": "Partner's Name",
-  "startDate": "2023-09-18",
-  "anniversaryDate": "2026-09-18",
-  "passcode": "",
-  "finalLetter": ["Paragraph 1", "Paragraph 2"]
+    "chapter": "01",
+    "title": "Where the Water Begins",
+    "image": "assets/photo1.jpg",     # ← your photo
+    "caption": "The day opened slowly…",
+    "layout": "full",
 }
 ```
 
-Set `passcode` to a non-empty string to enable the gate screen.
+### Edit the landing copy
 
-## Adding Music
-
-Place an MP3 at `public/audio/song.mp3`. The music toggle appears automatically.
-
-## Deploy to Vercel
-
-```bash
-npm run build
+```python
+SITE = {
+    "kicker": "A CINEMATIC DIGITAL DIARY",
+    "title_lines": ["THE TIDE", "REMEMBERS"],
+    "subtitle": "Six moments. One shoreline. A memory carried by the sea.",
+    "hero_image": "assets/photo1.jpg",
+    "meta": ["2026", "6 MOMENTS", "BEACH", "SEA", "WILDLIFE"],
+    ...
+}
 ```
 
-Push to Vercel — the project uses static export (`output: "export"`).
+### Chapter layouts
 
-## Tech Stack
+Each entry’s `layout` key controls how the photo is staged (all six are different
+on purpose, so no two chapters feel repeated):
 
-- Next.js 16+ (App Router) with static export
-- TypeScript (strict), Tailwind CSS v4
-- Framer Motion (all animation, layoutId transitions)
-- Embla Carousel (horizontal rows with drag/swipe)
-- Lenis (smooth page scrolling)
-- Howler.js (optional music)
-- Canvas Confetti (credits celebration)
+| layout     | feel                                        |
+| ---------- | ------------------------------------------- |
+| `full`     | edge-to-edge cinematic still                |
+| `split`    | editorial text column + bleeding image      |
+| `overlap`  | large still + overlapping glass caption     |
+| `feature`  | the tortoise chapter — centered, quoted     |
+| `aside`    | mirrored split with offset typography       |
+| `finale`   | full-screen closing frame                   |
+
+---
+
+## Experience
+
+- **▶ PLAY STORY** — opens a full-screen documentary player: slow Ken Burns zoom,
+  crossfades, lower-third titles, segmented progress bars, keyboard controls
+  (`←` `→` `space` `esc`), and an end card.
+- **＋ EXPLORE MEMORIES** — glides to the full diary timeline.
+- **Chapter navigation** — top bar numbers, right-hand rail, and timeline ticks all
+  track the active chapter and are clickable.
+- **Tortoise motif** — silhouette in the brand mark, a dedicated marker on chapter 04
+  in the rail, and the line *“Some journeys are meant to be slow.”*
+
+---
+
+## Design Notes
+
+- **Typography** — Playfair Display (display) + Inter (UI/body)
+- **Palette** — deep ocean blacks/blues, aqua accent, sand-gold chapter numerals
+- **Atmosphere** — animated film grain, drifting ocean glows, vignette, scroll progress
+- **Performance** — no heavy JS libraries; photos are optimized (~800 KB total) and
+  inlined once as CSS custom properties
+- **Accessibility** — semantic landmarks, focus styles, `prefers-reduced-motion`
+  support, labelled interactive controls
+- **Responsive** — cinematic on desktop/laptop/tablet; stacks into a clean vertical
+  story on mobile with no horizontal overflow
+
+---
+
+## Git
+
+```bash
+git init
+git add .
+git commit -m "Create cinematic beach digital diary"
+```
+
+Push to a new remote:
+
+```bash
+git remote add origin https://github.com/<your-user>/the-tide-remembers.git
+git branch -M main
+git push -u origin main
+```
