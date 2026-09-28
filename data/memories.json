@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "tide-01",
+      "chapter": 1,
+      "title": "Where the Water Begins",
+      "date": "2026-09-01",
+      "location": "",
+      "image": "assets/photo1.jpg",
+      "memory": "The day opened slowly — salt on the skin, light on the water, and nowhere else we needed to be.",
+      "story": "",
+      "mood": "",
+      "tags": [
+        "beach",
+        "morning"
+      ],
+      "layout": "full",
+      "origin": "seed",
+      "created": "",
+      "caption": "The day opened slowly — salt on the skin, light on the water, and nowhere else we needed to be."
+    },
+    {
+      "id": "tide-02",
+      "chapter": 2,
+      "title": "Salt in the Air",
+      "date": "2026-09-04",
+      "location": "",
+      "image": "assets/photo2.jpg",
+      "memory": "Wind, warm light, and the first real breath of the season. We walked until the noise turned into weather.",
+      "story": "",
+      "mood": "",
+      "tags": [
+        "wind",
+        "walk"
+      ],
+      "layout": "split",
+      "origin": "seed",
+      "created": "",
+      "caption": "Wind, warm light, and the first real breath of the season. We walked until the noise turned into weather."
+    },
+    {
+      "id": "tide-03",
+      "chapter": 3,
+      "title": "A Quiet Shore",
+      "date": "2026-09-07",
+      "location": "",
+      "image": "assets/photo3.jpg",
+      "memory": "Low tide and long pauses — the kind of quiet that only feels full when someone is sitting beside you.",
+      "story": "",
+      "mood": "",
+      "tags": [
+        "lowtide",
+        "quiet"
+      ],
+      "layout": "overlap",
+      "origin": "seed",
+      "created": "",
+      "caption": "Low tide and long pauses — the kind of quiet that only feels full when someone is sitting beside you."
+    },
+    {
+      "id": "tide-04",
+      "chapter": 4,
+      "title": "The Little Traveller",
+      "date": "2026-09-10",
+      "location": "",
+      "image": "assets/photo4.jpg",
+      "memory": "We found it near the water’s edge: small, armoured, entirely unbothered by the size of the ocean.",
+      "story": "",
+      "mood": "",
+      "tags": [
+        "tortoise",
+        "wildlife"
+      ],
+      "layout": "feature",
+      "origin": "seed",
+      "created": "",
+      "caption": "We found it near the water’s edge: small, armoured, entirely unbothered by the size of the ocean."
+    },
+    {
+      "id": "tide-05",
+      "chapter": 5,
+      "title": "Between Tide & Sand",
+      "date": "2026-09-12",
+      "location": "",
+      "image": "assets/photo5.jpg",
+      "memory": "Footprints filled as fast as we made them. We stopped trying to keep them, and kept walking anyway.",
+      "story": "",
+      "mood": "",
+      "tags": [
+        "footprints",
+        "evening"
+      ],
+      "layout": "aside",
+      "origin": "seed",
+      "created": "",
+      "caption": "Footprints filled as fast as we made them. We stopped trying to keep them, and kept walking anyway."
+    },
+    {
+      "id": "tide-06",
+      "chapter": 6,
+      "title": "Until the Next Wave",
+      "date": "2026-09-14",
+      "location": "",
+      "image": "assets/photo6.jpg",
+      "memory": "We left the shore the way you close a good book — slowly, already missing the last page.",
+      "story": "",
+      "mood": "",
+      "tags": [
+        "goodbye",
+        "sea"
+      ],
+      "layout": "finale",
+      "origin": "seed",
+      "created": "",
+      "caption": "We left the shore the way you close a good book — slowly, already missing the last page."
+    }
+  ]
+}

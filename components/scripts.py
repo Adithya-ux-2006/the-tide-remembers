@@ -9,11 +9,22 @@ DWELL_MS = 6500
 
 def get_scripts(entries: list[dict]) -> str:
     chapters = [
-        {"n": e["chapter"], "title": e["title"], "caption": e["caption"]}
+        {
+            "n": _num(e.get("chapter")),
+            "title": e.get("title") or "",
+            "caption": e.get("caption") or e.get("memory") or "",
+        }
         for e in entries
     ]
     data = json.dumps(chapters, ensure_ascii=False).replace("</", "<\\/")
     return "<script>\n" + _JS.replace("__CHAPTERS__", data) + "\n</script>"
+
+
+def _num(value) -> str:
+    try:
+        return f"{int(str(value).strip()):02d}"
+    except (TypeError, ValueError):
+        return str(value)
 
 
 _JS = r"""
@@ -48,6 +59,7 @@ _JS = r"""
     requestAnimationFrame(function () {
       var y = window.scrollY || document.documentElement.scrollTop;
       if (topbar) topbar.classList.toggle("scrolled", y > 40);
+      try { sessionStorage.setItem("tideY", String(Math.round(y))); } catch (err) {}
       var h = document.documentElement.scrollHeight - window.innerHeight;
       if (fill) fill.style.width = (h > 0 ? Math.min(100, (y / h) * 100) : 0) + "%";
       if (!reduced) {
@@ -152,6 +164,7 @@ _JS = r"""
 
   function finish() {
     playing = false;
+    story.classList.add("ended");
     endCard.classList.add("show");
     endCard.setAttribute("aria-hidden", "false");
   }
@@ -164,11 +177,13 @@ _JS = r"""
   }
 
   function openStory(start) {
+    if (!CHAPTERS.length || !story) return;
     idx = Math.max(0, Math.min(CHAPTERS.length - 1, start || 0));
     opened = true;
     endCard.classList.remove("show");
     endCard.setAttribute("aria-hidden", "true");
     story.classList.add("open");
+    story.classList.remove("ended");
     story.setAttribute("aria-hidden", "false");
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
@@ -197,6 +212,11 @@ _JS = r"""
   /* ---------------- delegated interactions ---------------- */
   document.addEventListener("click", function (e) {
     var t;
+    if (window.tideMem && window.tideMem.handle(e)) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      return;
+    }
     if ((t = e.target.closest("[data-goto]"))) {
       e.preventDefault();
       gotoChapter(t.dataset.goto);
@@ -213,6 +233,7 @@ _JS = r"""
     }
     if (e.target.closest("[data-s-replay]")) {
       idx = 0;
+      story.classList.remove("ended");
       endCard.classList.remove("show");
       endCard.setAttribute("aria-hidden", "true");
       paint();
@@ -235,6 +256,36 @@ _JS = r"""
       if (!endCard.classList.contains("show")) setPlaying(!playing);
     }
   });
+
+  /* ---------------- index rows: keyboard, and coming back to our place ------- */
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var row = t.closest('[role="link"]');
+    if (!row) return;
+    e.preventDefault();
+    row.click();
+  });
+
+  function restoreScroll() {
+    var y = 0;
+    try {
+      if (sessionStorage.getItem("tideReturn") !== "1") return;
+      sessionStorage.removeItem("tideReturn");
+      y = parseInt(sessionStorage.getItem("tideY") || "0", 10) || 0;
+    } catch (err) { return; }
+    if (!y) return;
+    requestAnimationFrame(function () {
+      var root = document.documentElement;
+      var prev = root.style.scrollBehavior;
+      root.style.scrollBehavior = "auto";
+      window.scrollTo(0, y);
+      root.style.scrollBehavior = prev;
+    });
+  }
+  if (document.readyState === "complete") restoreScroll();
+  else window.addEventListener("load", restoreScroll);
 
   /* small hooks used by automated visual tests */
   window.tideStory = { open: openStory, close: closeStory, end: finish };

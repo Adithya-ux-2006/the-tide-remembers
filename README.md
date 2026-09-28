@@ -7,8 +7,12 @@ photographs are presented as six chapters of one continuous shoreline story — 
 hero, chapter navigation, scroll choreography, and a full-screen “Play Story” documentary
 mode.
 
+It is also **writable**: anyone reading the page can add, edit and delete memories from
+inside the browser. The diary persists in `data/memories.json`, so the six original
+chapters behave exactly like memories added later.
+
 > **A CINEMATIC DIGITAL DIARY**
-> 2026 · 6 MOMENTS · BEACH · SEA · WILDLIFE
+> 2026 · 3 YEARS · 6 MOMENTS · BEACH · SEA · WILDLIFE
 
 ---
 
@@ -41,7 +45,7 @@ No environment variables or secrets are required — the six photos are embedded
 ```text
 the-tide-remembers/
 │
-├── app.py                  # entry point — assembles the page, hides Streamlit chrome
+├── app.py                  # entry point — loads the store, serves the page
 ├── requirements.txt
 ├── README.md
 ├── .gitignore
@@ -52,18 +56,23 @@ the-tide-remembers/
 │   ├── photo3.jpg
 │   ├── photo4.jpg          # the little traveller — tortoise chapter
 │   ├── photo5.jpg
-│   └── photo6.jpg
+│   ├── photo6.jpg
+│   └── uploads/            # photos added from the page (uuid filenames)
 │
 ├── components/
+│   ├── page.py             # assembles the document + two-way bridge to the page
 │   ├── hero.py             # full-screen landing hero
-│   ├── chapters.py         # nav, timeline, six chapter layouts, footer
+│   ├── chapters.py         # nav, timeline, diary index, six chapter layouts, footer
+│   ├── memory.py           # add / edit / delete dialog + search & mood filters
 │   ├── story.py            # full-screen “Play Story” player markup
 │   ├── scripts.py          # scroll choreography + story player (vanilla JS)
 │   ├── styles.py           # all CSS + Streamlit chrome-hiding styles
 │   └── svg.py              # tortoise motif + player icons
 │
 ├── data/
-│   └── diary.py            # ← ALL content lives here
+│   ├── diary.py            # ← seed content + landing copy lives here
+│   ├── store.py            # load/save/mutate data/memories.json, photo uploads
+│   └── memories.json       # the live diary (created on first run)
 │
 └── .streamlit/
     └── config.toml         # dark theme defaults
@@ -73,7 +82,29 @@ the-tide-remembers/
 
 ## Editing Content (photos, titles, captions)
 
-Everything editable lives in **`data/diary.py`** — the frontend never needs to change.
+Two places, depending on whether you are reading or maintaining:
+
+| what you want | where |
+| --- | --- |
+| the live diary — add / edit / delete a memory | from the page itself (below) |
+| the six original chapters & all landing copy | **`data/diary.py`** |
+
+The frontend never needs to change for either.
+
+### Add, edit or delete a memory (no code)
+
+* **＋ ADD MEMORY** in the top bar, or the button under the diary index, opens the
+  dialog: title, date, place, mood, tags, the memory line, an optional longer story,
+  and a photo (JPEG/PNG/WebP, resized to 1800 px in the browser before upload).
+* Every index row has **EDIT** and **DELETE**.
+* **Search** and the **mood chips** filter the index live; the empty state shows when
+  nothing matches.
+* Everything is written to `data/memories.json`; photos land in `assets/uploads/`.
+
+New memories get the next chapter number and cycle through the layouts
+(`full`, `split`, `overlap`, `aside`, `finale`) so no two neighbours look alike.
+The copy that says “Six moments …” counts entries automatically, so it stays correct
+at any size.
 
 ### Replace a photo
 
@@ -82,13 +113,19 @@ Everything editable lives in **`data/diary.py`** — the frontend never needs to
 
 ```python
 {
-    "chapter": "01",
+    "id": "tide-01",
+    "chapter": 1,
     "title": "Where the Water Begins",
     "image": "assets/photo1.jpg",     # ← your photo
-    "caption": "The day opened slowly…",
+    "date": "2026-09-01",
+    "memory": "The day opened slowly…",
     "layout": "full",
+    "origin": "seed",
 }
 ```
+
+> If `data/memories.json` already exists, edit the entry there — `SEED_ENTRIES` only
+> seeds a brand-new store. Delete the file to re-seed from the six originals.
 
 ### Edit the landing copy
 
@@ -102,6 +139,10 @@ SITE = {
     ...
 }
 ```
+
+Count-bearing lines (`subtitle`, `meta`, the intro heading, footer meta) are rewritten
+by `build_site()` from the number of entries in the store, so “Six moments” stays true
+however many memories exist.
 
 ### Chapter layouts
 
@@ -125,8 +166,12 @@ on purpose, so no two chapters feel repeated):
   crossfades, lower-third titles, segmented progress bars, keyboard controls
   (`←` `→` `space` `esc`), and an end card.
 - **＋ EXPLORE MEMORIES** — glides to the full diary timeline.
+- **＋ ADD MEMORY / EDIT / DELETE** — write the diary from inside the page; search and
+  mood chips filter the index, and a toast confirms every save.
 - **Chapter navigation** — top bar numbers, right-hand rail, and timeline ticks all
   track the active chapter and are clickable.
+- **Dedication** — the anniversary line closes the story before the footer, and again
+  on the player’s end card.
 - **Tortoise motif** — silhouette in the brand mark, a dedicated marker on chapter 04
   in the rail, and the line *“Some journeys are meant to be slow.”*
 

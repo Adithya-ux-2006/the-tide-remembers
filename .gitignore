@@ -36,5 +36,6 @@ mprobe*.html
 mwrap*.html
 croptest.html
 t_*.html
+w390*.html
 *.png
 !assets/**/*.png

@@ -17,12 +17,21 @@ def _stem(path: str) -> str:
     return path.rsplit("/", 1)[-1].rsplit(".", 1)[0].lower()
 
 
+def _n(value) -> str:
+    try:
+        return f"{int(str(value).strip()):02d}"
+    except (TypeError, ValueError):
+        return str(value)
+
+
 def render_story(site: dict, entries: list[dict]) -> str:
     brand = escape(site["brand"])
 
     slides = "".join(
         f'<div class="story-slide" data-i="{i - 1}">'
-        f'<div class="story-img" role="img" aria-label="Chapter {e["chapter"]}: '
+        f'<div class="story-bg" aria-hidden="true" '
+        f'style="background-image:var(--img-{_stem(e["image"])})"></div>'
+        f'<div class="story-img" role="img" aria-label="Chapter {_n(e["chapter"])}: '
         f'{escape(e["title"])}" '
         f'style="background-image:var(--img-{_stem(e["image"])})"></div></div>'
         for i, e in enumerate(entries, start=1)
@@ -30,7 +39,8 @@ def render_story(site: dict, entries: list[dict]) -> str:
 
     bars = "".join('<span class="sbar"><i class="sbar-fill"></i></span>' for _ in entries)
 
-    first = entries[0]
+    first = entries[0] if entries else {"chapter": 0, "title": "", "memory": ""}
+    first_text = str(first.get("caption") or first.get("memory") or "")
     count = f"{len(entries):02d}"
 
     return f"""
@@ -44,9 +54,9 @@ def render_story(site: dict, entries: list[dict]) -> str:
     </div>
     <div class="story-bars" aria-hidden="true">{bars}</div>
     <div class="story-center" id="storyCenter">
-      <div class="story-chap" id="storyChap">CHAPTER {first["chapter"]}</div>
-      <h2 class="story-title" id="storyTitle">{escape(first["title"])}</h2>
-      <p class="story-text" id="storyText">{escape(first["caption"])}</p>
+      <div class="story-chap" id="storyChap">CHAPTER {_n(first["chapter"])}</div>
+      <h2 class="story-title" id="storyTitle">{escape(str(first.get("title") or ""))}</h2>
+      <p class="story-text" id="storyText">{escape(first_text)}</p>
     </div>
     <div class="story-bottom">
       <div class="story-controls">
@@ -54,7 +64,7 @@ def render_story(site: dict, entries: list[dict]) -> str:
         <button class="sctrl main" type="button" data-s-toggle aria-label="Pause">{PAUSE_SVG}</button>
         <button class="sctrl" type="button" data-s-next aria-label="Next chapter">{NEXT_SVG}</button>
       </div>
-      <div class="story-count"><b id="storyIndex">{first["chapter"]}</b> / {count}</div>
+      <div class="story-count"><b id="storyIndex">{_n(first["chapter"])}</b> / {count}</div>
     </div>
   </div>
   <div class="story-end" id="storyEnd" aria-hidden="true">
@@ -67,6 +77,7 @@ def render_story(site: dict, entries: list[dict]) -> str:
       <button class="btn btn-ghost" type="button" data-s-explore>{escape(site["explore_label"])}</button>
     </div>
     <div class="se-quote">“{escape(site["tortoise_quote"])}”</div>
+    <p class="se-ded">{escape(site["anniv_kicker"])}. {escape(site["anniv_line"])}</p>
   </div>
 </div>
 """
